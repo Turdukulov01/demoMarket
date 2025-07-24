@@ -2,7 +2,6 @@ from typing import AsyncGenerator
 
 from sqlalchemy import event
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from sqlalchemy.pool import AsyncAdaptedQueuePool
 from src.config.config_db import settings
 
 

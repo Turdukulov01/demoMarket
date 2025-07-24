@@ -1,9 +1,9 @@
-from src.base import base_db
+from src.base import Base
 from pydantic import EmailStr
-from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy.orm import mapped_column, Mapped, relationship
 from sqlalchemy import String
 
-class User(base_db):
+class User(Base):
     __tablename__ = "users"
 
     first_name: Mapped[str] = mapped_column(
@@ -33,4 +33,7 @@ class User(base_db):
         String(30),
         nullable=False,
     )
-
+    products: Mapped[list["Product"]] = relationship(
+        back_populates="seller",
+        cascade="all, delete-orphan"
+    )

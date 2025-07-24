@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    db_url: str = "sqlite:///./test.db"
+    db_url: str = "sqlite+aiosqlite:///./test.db"  # ← добавили +aiosqlite
     db_echo: bool = True
     db_pool_size: int = 5
     db_max_overflow: int = 10

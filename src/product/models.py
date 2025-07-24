@@ -2,14 +2,13 @@
 from decimal import Decimal
 from sqlalchemy import String, Integer, Numeric, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 from src.base import Base  # ваш общий DeclarativeBase
 
 class Product(Base):
     __tablename__ = "products"
 
     # 1) Первичный ключ
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    # id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
 
     # 2) Основные поля
     title: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
@@ -22,10 +21,11 @@ class Product(Base):
     seller_id: Mapped[int] = mapped_column(
         Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
-    category_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("categories.id", ondelete="SET NULL")
+    category_id: Mapped[int | None] = mapped_column(
+        Integer, ForeignKey("categories.id", ondelete="SET NULL"),
+        nullable=True
     )
 
     # 5) Отношения (необязательно, но удобно)
-    seller:   Mapped["User"]     = relationship(back_populates="products")
+    seller: Mapped["User"] = relationship(back_populates="products")
     category: Mapped["Category"] = relationship(back_populates="products")
