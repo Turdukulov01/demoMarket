@@ -1,5 +1,7 @@
 FROM python:3.12-slim
 
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
 # ───────── Системные зависимости (если нужны C-расширения) ─────────
 RUN apt-get update \
  && apt-get install -y --no-install-recommends build-essential libpq5 \
@@ -10,8 +12,8 @@ WORKDIR /app
 # ───────── Копируем проект ─────────
 COPY pyproject.toml ./
  # манифест
-COPY src/ src/
- # исходники
+COPY . .
+  # исходники
 
 # ───────── Ставим uv и сам проект с зависимостями ─────────
 RUN pip install --no-cache-dir uv \
@@ -19,5 +21,7 @@ RUN pip install --no-cache-dir uv \
 
 # ───────── Запуск приложения ─────────
 ENV PYTHONPATH=/app/src
-EXPOSE 8000
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+#EXPOSE 8000
+#CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+EXPOSE 5000
+CMD ["python", "run.py"]
