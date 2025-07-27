@@ -22,5 +22,8 @@ app = FastAPI(
 # подключаем роутеры как обычно
 from src.product.router import router as product_router
 from src.user.router import router as user_router
+from src.category.router import router as category_router
 app.include_router(product_router)
 app.include_router(user_router)
+app.include_router(category_router)
+
