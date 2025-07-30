@@ -47,7 +47,7 @@ async def update_product(
     db: AsyncSession = Depends(get_async_session)
 ):
     try:
-        return await ProductService.update_product(db, product_id, dto)
+        return await ProductService.update_product_id(db, product_id, dto)
     except ValueError as exc:
         match str(exc):
             case "product_not_found":
@@ -58,4 +58,4 @@ async def update_product(
 # ---------- DELETE ----------
 @router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Удалить товар")
 async def delete_product(product_id: int, db: AsyncSession = Depends(get_async_session)):
-    await ProductService.delete_product(db, product_id)
+    await ProductService.delete_product_id(db, product_id)
