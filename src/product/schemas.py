@@ -1,22 +1,27 @@
 # schemas/product.py
+from datetime import datetime
+
 from pydantic import BaseModel, ConfigDict, PositiveInt, PositiveFloat, constr
 
-class ProductBase(BaseModel):
+class ProductBaseDTO(BaseModel):
     title: constr(min_length=1, max_length=255)
     description: constr(max_length=1024) | None = None
     price: PositiveFloat  # или Decimal
     seller_id: PositiveInt
     category_id: PositiveInt
+    created: datetime
+    updated_at: datetime
+    is_active: bool
 
-class ProductCreate(ProductBase):
+class ProductCreateDTO(ProductBaseDTO):
     """DTO для POST /products — создаёт новый товар."""
     # ничего добавлять не нужно
 
-class ProductRead(ProductBase):
+class ProductReadDTO(ProductBaseDTO):
     """DTO для отдачи товара клиенту."""
     id: int
     model_config = ConfigDict(from_attributes=True)  # ← читаем из ORM
 
-class ProductUpdate(ProductBase):
+class ProductUpdateDTO(ProductBaseDTO):
     id: int
 

@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.utils.db_helper import get_async_session
-from src.product.schemas import ProductCreate, ProductUpdate, ProductRead
+from src.product.schemas import ProductCreateDTO, ProductUpdateDTO, ProductReadDTO
 from src.product.service import ProductService
 
 router = APIRouter(
@@ -12,12 +12,12 @@ router = APIRouter(
 )
 
 # ---------- READ (list) ----------
-@router.get("/", response_model=list[ProductRead], summary="Список всех товаров")
+@router.get("/", response_model=list[ProductReadDTO], summary="Список всех товаров")
 async def list_products(db: AsyncSession = Depends(get_async_session)):
     return await ProductService.list_products(db)
 
 # ---------- READ (single) ----------
-@router.get("/{product_id}", response_model=ProductRead, summary="Получить товар по ID")
+@router.get("/{product_id}", response_model=ProductReadDTO, summary="Получить товар по ID")
 async def get_product(product_id: int, db: AsyncSession = Depends(get_async_session)):
     try:
         return await ProductService.get_product(db, product_id)
@@ -28,11 +28,11 @@ async def get_product(product_id: int, db: AsyncSession = Depends(get_async_sess
 # ---------- CREATE ----------
 @router.post(
     "/",
-    response_model=ProductRead,
+    response_model=ProductReadDTO,
     status_code=status.HTTP_201_CREATED,
     summary="Создать новый товар"
 )
-async def create_product(dto: ProductCreate, db: AsyncSession = Depends(get_async_session)):
+async def create_product(dto: ProductCreateDTO, db: AsyncSession = Depends(get_async_session)):
     try:
         return await ProductService.create_product(db, dto)
     except ValueError as exc:
@@ -40,10 +40,10 @@ async def create_product(dto: ProductCreate, db: AsyncSession = Depends(get_asyn
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Price must be ≥ 0")
 
 # ---------- UPDATE ----------
-@router.put("/{product_id}", response_model=ProductRead, summary="Обновить товар целиком")
+@router.put("/{product_id}", response_model=ProductReadDTO, summary="Обновить товар целиком")
 async def update_product(
     product_id: int,
-    dto: ProductUpdate,
+    dto: ProductUpdateDTO,
     db: AsyncSession = Depends(get_async_session)
 ):
     try:

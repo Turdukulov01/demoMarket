@@ -7,9 +7,6 @@ from src.base import Base  # ваш общий DeclarativeBase
 class Product(Base):
     __tablename__ = "products"
 
-    # 1) Первичный ключ
-    # id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-
     # 2) Основные поля
     title: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
     description: Mapped[str | None] = mapped_column(String(1024))
