@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name            = "backendb"
+version         = "0.1.0"
+description     = "Add your description here"
+requires-python = ">=3.12"
+
+dependencies = [
+    "aiosqlite>=0.21.0",
+    "fastapi[standard]>=0.116.1",   # extra называется standard
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+    "sqlalchemy>=2.0.41",
+    "uvicorn>=0.35.0",
+]
+
+# --- всё, секция [project] закончилась. ---
+
+[tool.setuptools]
+package-dir = {"" = "src"}          # корень пакетов находится в ./src
+
+[tool.setuptools.packages.find]
+where = ["src"]                     # искать пакеты только в этой папке
