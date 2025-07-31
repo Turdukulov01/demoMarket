@@ -10,13 +10,13 @@ class UserRepository:
 
     # 1. Список юзеров
     @staticmethod
-    async def list_all(db: AsyncSession) -> Sequence[UserModel]:
+    async def list_all_user(db: AsyncSession) -> Sequence[UserModel]:
         result = await db.execute(select(UserModel))
         return result.scalars().all()
 
     # 2. Получить юзера по id
     @staticmethod
-    async def get_by_id(db: AsyncSession, user_id: int) -> UserModel:
+    async def get_by_id_user(db: AsyncSession, user_id: int) -> UserModel:
         result = await db.execute(
             select(UserModel).where(UserModel.id == user_id)
         )
