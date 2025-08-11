@@ -10,10 +10,15 @@ requires-python = ">=3.12"
 
 dependencies = [
     "aiosqlite>=0.21.0",
-    "fastapi[standard]>=0.116.1",   # extra называется standard
-    "pydantic>=2.11.7",
+    "email-validator>=2.2.0",
+    "fastapi-users[sqlalchemy]>=14.0.1",
+    "fastapi[standard]>=0.116.1", # extra называется standard
+    "passlib[bcrypt]>=1.7.4",
+    "pydantic>=2",
     "pydantic-settings>=2.10.1",
-    "sqlalchemy>=2.0.41",
+    "pytest>=8.4.1",
+    "python-jose[cryptography]>=3.5.0",
+    "sqlalchemy>=2",
     "uvicorn>=0.35.0",
 ]
 

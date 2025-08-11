@@ -1,28 +1,24 @@
 # src/product/models.py
+from __future__ import annotations
 from decimal import Decimal
-from sqlalchemy import String, Integer, Numeric, ForeignKey
+from sqlalchemy import String, Integer, Numeric, ForeignKey, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from src.base import Base  # ваш общий DeclarativeBase
+from src.base import Base
 
 class Product(Base):
     __tablename__ = "products"
 
-    # 2) Основные поля
     title: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
-    description: Mapped[str | None] = mapped_column(String(1024))
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
 
-    # 3) Цена — Numeric (10 цифр всего, 2 после запятой)
     price: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)
 
-    # 4) Внешние ключи
     seller_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+        Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
     )
     category_id: Mapped[int | None] = mapped_column(
-        Integer, ForeignKey("categories.id", ondelete="SET NULL"),
-        nullable=True
+        Integer, ForeignKey("categories.id", ondelete="SET NULL"), nullable=True, index=True
     )
 
-    # 5) Отношения (необязательно, но удобно)
     seller: Mapped["User"] = relationship(back_populates="products")
     category: Mapped["Category"] = relationship(back_populates="products")
