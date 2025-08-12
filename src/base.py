@@ -1,7 +1,7 @@
 # src/db/base.py  (пример)
 
 from datetime import datetime
-from sqlalchemy import DateTime, func
+from sqlalchemy import DateTime, func, Boolean
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 class Base(DeclarativeBase):
@@ -9,8 +9,14 @@ class Base(DeclarativeBase):
     __abstract__ = True
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
-    created: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    created: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.now(), onupdate=func.now()
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
-    is_active: Mapped[bool] = mapped_column(default=True)
+    is_active: Mapped[bool] = mapped_column(Boolean,default=True)
+
+    # id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
+    # created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    # updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(),
+    #                                              onupdate=func.now())
+    # is_active: Mapped[bool] = mapped_column(Boolean, default=True)

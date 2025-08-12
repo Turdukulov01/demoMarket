@@ -10,11 +10,11 @@ from src.config.config_db import settings
 
 """
 engine = create_async_engine(
-    settings.db_url,
-    echo = settings.db_echo,
-    pool_size = settings.db_pool_size,
-    max_overflow = settings.db_max_overflow,
-    pool_timeout = settings.db_pool_timeout,
+    settings.DB_URL,
+    echo = settings.DB_ECHO,
+    pool_size = settings.DB_POOL_SIZE,
+    max_overflow = settings.DB_MAX_OVERFLOW,
+    pool_timeout = settings.DB_POOL_TIMEOUT,
 )
 
 
